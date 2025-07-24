@@ -8,16 +8,9 @@ class GeolocatorConfig {
 
   static GeolocatorConfig get instance => _instance;
 
-  Future<Position?> determinePosition() async {
+  Future<LocationPermission> askPermission() async {
     try {
-      bool serviceEnabled;
       LocationPermission permission;
-
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        throw Exception('Location services are disabled.');
-      }
-
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -25,7 +18,22 @@ class GeolocatorConfig {
           throw Exception('Location permissions are denied');
         }
       }
+      return permission;
+    } catch (e) {
+      LoggerConfig.instance.logger.e(e);
+      return LocationPermission.denied;
+    }
+  }
 
+  Future<Position?> determinePosition() async {
+    try {
+      bool serviceEnabled;
+
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw Exception('Location services are disabled.');
+      }
+      final permission = await askPermission();
       if (permission == LocationPermission.deniedForever) {
         throw Exception('Location permissions are permanently denied.');
       }
