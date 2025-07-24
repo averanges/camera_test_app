@@ -1,3 +1,4 @@
+import 'package:capture_photo_test_app/app/logger_config.dart';
 import 'package:capture_photo_test_app/app/services/features.dart';
 import 'package:capture_photo_test_app/app/services/photo_capture_service.dart';
 import 'package:capture_photo_test_app/app/services/location_service.dart';
@@ -34,15 +35,19 @@ class PhotoUploadController extends GetxController {
   }
 
   Future<void> resendPhoto() async {
-    final photo = state.value.photo!;
-    final uploaded = await _uploader.uploadPhoto(photo);
-    if (uploaded) {
-      await _storage.save(photo);
+    try {
+      if (state.value.photo == null) return;
+      final photo = state.value.photo!;
+      final uploaded = await _uploader.uploadPhoto(photo);
+      if (uploaded) {
+        state.value = state.value.copyWith(
+          isLastPhotoUploaded: true,
+          photo: photo.copyWith(isUploaded: true),
+        );
+      }
+    } catch (e) {
+      LoggerConfig.instance.logger.e(e);
     }
-    state.value = state.value.copyWith(
-      isLastPhotoUploaded: uploaded,
-      photo: photo.copyWith(isUploaded: uploaded),
-    );
   }
 
   Future<void> shotPhoto(BuildContext context) async {
