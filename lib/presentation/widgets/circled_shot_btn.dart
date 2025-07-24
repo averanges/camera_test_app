@@ -1,3 +1,4 @@
+import 'package:capture_photo_test_app/app/consts/strings.dart';
 import 'package:capture_photo_test_app/presentation/controller/photo_upload_controller.dart';
 import 'package:capture_photo_test_app/presentation/widgets/arrows_animated_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class CircledShotBtn extends StatelessWidget {
     final controller = Get.find<PhotoUploadController>();
     return GestureDetector(
       onTap: () async {
-        await controller.shotPhoto();
+        await controller.shotPhoto(context);
       },
       onVerticalDragStart: (details) {
         controller.toggleDrag(true);
@@ -96,7 +97,7 @@ class CircledShotBtn extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Leave Comment',
+                StringsData.leaveComment,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -104,7 +105,7 @@ class CircledShotBtn extends StatelessWidget {
                 ),
               ),
               Text(
-                'You can add comment before taking photo',
+                StringsData.enterCommentHint,
                 style: TextStyle(
                   color: Colors.black.withValues(alpha: 0.5),
                   fontSize: 12,
@@ -124,7 +125,7 @@ class CircledShotBtn extends StatelessWidget {
                   decoration: InputDecoration(
                     enabledBorder: InputBorder.none,
                     contentPadding: const EdgeInsets.all(10),
-                    hintText: 'Enter comment',
+                    hintText: StringsData.enterComment,
                   ),
                 ),
               ),

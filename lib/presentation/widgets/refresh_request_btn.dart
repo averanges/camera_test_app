@@ -13,7 +13,7 @@ class RefreshRequestBtn extends StatelessWidget {
         if (controller.state.value.isLastPhotoUploaded) {
           return;
         }
-        await controller.shotPhoto();
+        await controller.shotPhoto(context);
       },
       child: Obx(() {
         return Container(

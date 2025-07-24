@@ -1,3 +1,4 @@
+import 'package:capture_photo_test_app/app/services/features.dart';
 import 'package:capture_photo_test_app/app/services/photo_capture_service.dart';
 import 'package:capture_photo_test_app/app/services/location_service.dart';
 import 'package:capture_photo_test_app/app/services/photo_storage_service.dart';
@@ -44,7 +45,7 @@ class PhotoUploadController extends GetxController {
     );
   }
 
-  Future<void> shotPhoto() async {
+  Future<void> shotPhoto(BuildContext context) async {
     final path = await _photoCapture.takePhoto();
     final position = await _location.getCurrentPosition();
 
@@ -83,6 +84,9 @@ class PhotoUploadController extends GetxController {
       currentComment: null,
       photo: photo.copyWith(isUploaded: uploaded),
     );
+    if (context.mounted) {
+      Features().showUploadToast(context, success: uploaded);
+    }
     commentController.clear();
     state.refresh();
   }

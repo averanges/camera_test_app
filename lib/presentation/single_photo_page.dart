@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:capture_photo_test_app/app/consts/strings.dart';
 import 'package:flutter/material.dart';
 
 class SinglePhotoPage extends StatefulWidget {
@@ -83,7 +84,7 @@ class _SinglePhotoPageState extends State<SinglePhotoPage>
                             children: [
                               Row(
                                 children: [
-                                  const Text('Comment: '),
+                                  Text(StringsData.commentCategory),
                                   const SizedBox(width: 10),
                                   Text(
                                     widget.comment,
@@ -96,7 +97,7 @@ class _SinglePhotoPageState extends State<SinglePhotoPage>
                               ),
                               Row(
                                 children: [
-                                  const Text('Latitude: '),
+                                  Text(StringsData.latitudeCategory),
                                   const SizedBox(width: 10),
                                   Text(
                                     widget.latitude,
@@ -109,7 +110,7 @@ class _SinglePhotoPageState extends State<SinglePhotoPage>
                               ),
                               Row(
                                 children: [
-                                  const Text('Longitude: '),
+                                  Text(StringsData.longitudeCategory),
                                   const SizedBox(width: 10),
                                   Text(
                                     widget.longitude,
