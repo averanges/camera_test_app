@@ -75,9 +75,7 @@ class PhotoUploadController extends GetxController {
 
     final uploaded = await _uploader.uploadPhoto(photo);
 
-    if (uploaded) {
-      await _storage.save(photo);
-    }
+    await _storage.save(photo);
 
     state.value = state.value.copyWith(
       isLastPhotoUploaded: uploaded,
